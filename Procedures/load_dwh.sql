@@ -13,5 +13,6 @@ exec dbo.load_d_airline;
 exec dbo.load_d_terminal;
 exec dbo.load_d_baggage_type;
 exec [dbo].[load_d_seat];
+--tu ti chybaju procedury
 GO
 
