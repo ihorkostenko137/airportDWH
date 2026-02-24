@@ -5,14 +5,26 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 
-create   procedure [dbo].[load_dwh]
-as
+CREATE PROCEDURE [dbo].[load_dwh]
+AS
+BEGIN
+    SET NOCOUNT ON;
 
-exec dbo.load_d_airport;
-exec dbo.load_d_airline;
-exec dbo.load_d_terminal;
-exec dbo.load_d_baggage_type;
-exec [dbo].[load_d_seat];
---tu ti chybaju procedury
+    -- Dimensions (independent first)
+    EXEC dbo.load_d_airport;
+    EXEC dbo.load_d_airline;
+    EXEC dbo.load_d_terminal;
+    EXEC dbo.load_d_gate;
+    EXEC dbo.load_d_flight_plane_type;
+    EXEC dbo.load_d_source;
+
+    EXEC dbo.load_d_baggage_type;
+    EXEC dbo.load_d_airticket_type;
+    EXEC dbo.load_d_seat;
+    EXEC dbo.load_d_customer;
+
+    -- Facts (after dimensions)
+    EXEC dbo.load_dwh_f_flight;
+    EXEC dbo.load_dwh_f_ticket;   -- используй ЭТУ (с underscore), не load_dwh.f_ticket
+END
 GO
-
